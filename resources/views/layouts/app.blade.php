@@ -6,24 +6,41 @@
         <title>DevStagram - @yield('titulo')</title>
         @vite('resources/css/app.css')
     </head>
-    <body>
+    <body class="bg-gray-200">
         <header class="p-5 border-b bg-white shadow">
             <div class="container mx-auto flex justify-between items-center">
             <h1 class="text-3xl font-black">
                 DevStagram
             </h1>
 
+            @auth
+            <nav class="flex gap-2 items-center">
+                <a class="font-bold uppercase text-gray-600 text-sm" href="#">Hola, <span class="font-normal"> {{ auth()->user()->username}}</span>!</a>
+
+                <form method="POST" action="{{ route('logout') }}">
+                    @CSRF
+                    <button type="submit" class=" font-bold uppercase text-gray-600 text-sm">
+                        Cerrar sesión
+                    </button>
+                </form>
+            </nav>
+            @endauth
+
+            @guest
             <nav class="flex gap-2 items-center">
                 <a class="font-bold uppercase text-gray-600 text-sm" href="#">Login</a>
                 <a href="{{ route('register')}}" class=" font-bold uppercase text-gray-600 text-sm">
                     Crear cuenta
                 </a>
             </nav>
+            @endguest
+
+            
         </header>
 
         <hr>
 
-        <main class="container mx-auto -mt-10">
+        <main class="container mx-auto mt-10">
             <h2 class="font-black text-center text-3xl mb-10">
                 @yield('titulo')
             </h2>
